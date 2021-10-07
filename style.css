@@ -29,13 +29,13 @@ body {
 }
 
 #coding {
-    position: relative;
-    display: inline-block; /* Make the width of box same as image */
+    /* position: relative; */
+    /* display: inline-block; */ /* Make the width of box same as image */
     width: 100%;
 }
 
 #coding .coding-text {
-    position: absolute;
+    /* position: absolute; */
     z-index: 2;
     margin 0 auto;
     top: 30%; /* Adjust this value to move the positioned div up and down */
@@ -45,7 +45,7 @@ body {
 }
 
 .coding-text {
-    background-color: rgba(25, 25, 25, 90%);
+    /* background-color: rgba(25, 25, 25, 90%); */
     right: 10em;
     left: 10em;
 }
@@ -53,7 +53,7 @@ body {
 .coding-img {
     width: 100%;
 }
-/**
+
 ul .nav {
   text-align: center;
   list-style: none;
@@ -80,7 +80,7 @@ ul .nav {
     display: flex;
     justify-content: right;
 }
-**/
+
 header {
     position: fixed;
     background-color: rgb(25,25,25);
@@ -108,7 +108,7 @@ footer {
     flex-direction: row;
     background-color: dark-gray;
 }
-
+/*
 .footerdiv {
     margin-right: 1rem;
     border-color: lightslategray;
@@ -121,12 +121,13 @@ footer {
 .footerdiv:hover {
     box-shadow: 0px 0px 10px 9px lightslategray;
 }
-
+*/
 li {
     list-style: none;
 }
-
+/*
 table {
   border: 1px solid blue;
   color: lightblue;
 }
+*/
