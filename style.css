@@ -20,7 +20,7 @@ a:hover {
 }
 
 body {
-    background-color: rgb(18,18,18);
+    background-color: rgb(18,18,40);
     color: white;
 }
 
@@ -83,7 +83,7 @@ ul .nav {
 
 header {
     position: fixed;
-    background-color: rgb(20,20,20);
+    background-color: rgb(20,20,50);
     top: 0;
     right: 0;
     left: 0;
