@@ -1,6 +1,7 @@
 const keys = 'LEFT,RIGHT,SPACE,UP,W,A,S,D,R'
 
 let pl, k, go, jump, music, enemySpawnTimer
+let moreCoinPoints = 0;
 
 const randint = lim => Math.floor(Math.random() * lim)
 const rX = () => randint(1024)
@@ -75,8 +76,13 @@ class Main extends Phaser.Scene {
     })
     
     const collectCoin = (pl, coin) => {
+      moreCoinPoints++
       pickup.play()
-      score += 1
+      if (moreCoinsPoints >= 3) {
+        score += 2
+      } else {
+        score += 1
+      }
       scoreText.setText(`Score: ${score}`)
       coin.destroy()
       spawnCoins(1)
@@ -91,9 +97,12 @@ class Main extends Phaser.Scene {
       this.physics.pause()
       clearInterval(enemySpawnTimer)
     }
-
-
-    this.physics.add.collider(pl, plats)
+    
+    const setMoreCoinPoints = (pl, plats) => {
+      let moreCoinPoints = 0;
+    }
+    
+    this.physics.add.collider(pl, plats, setMoreCoinPoints)
     this.physics.add.overlap(pl, coins, collectCoin)
     this.physics.add.collider(bad, plats)
     this.physics.add.collider(pl, bad, hitBad)
