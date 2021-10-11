@@ -10,17 +10,17 @@ const rY = () => randint(768)
 class Main extends Phaser.Scene {
 
   preload() {
-    this.load.image('bg', '../assets/img/newbackg.png')
-    this.load.image('coin', '../assets/img/coin.png')
-    this.load.image('bad', '../assets/img/bad-guy.png')
-    this.load.image('pf', '../assets/img/platform.png')
-    this.load.image('go', '../assets/img/game-over.png')
-    this.load.spritesheet('pl', '../assets/img/good-guy.png', { frameWidth: 17, frameHeight: 30 })
-    this.load.audio('pickup', '../assets/snd/coinsound.wav')
-    this.load.audio('music', '../assets/snd/backsound.wav')
-    this.load.audio('gos', '../assets/snd/game-over.wav')
-    this.load.audio('jump', '../assets/snd/jump.wav')
-    this.load.audio('hit', '../assets/snd/collide.wav')
+    this.load.image('bg', '../game/assets/img/newbackg.png')
+    this.load.image('coin', '../game/assets/img/coin.png')
+    this.load.image('bad', '../game/assets/img/bad-guy.png')
+    this.load.image('pf', '../game/assets/img/platform.png')
+    this.load.image('go', '../game/assets/img/game-over.png')
+    this.load.spritesheet('pl', '../game/assets/img/good-guy.png', { frameWidth: 17, frameHeight: 30 })
+    this.load.audio('pickup', '../game/assets/snd/coinsound.wav')
+    this.load.audio('music', '../game/assets/snd/backsound.wav')
+    this.load.audio('gos', '../game/assets/snd/game-over.wav')
+    this.load.audio('jump', '../game/assets/snd/jump.wav')
+    this.load.audio('hit', '../game/assets/snd/collide.wav')
   }
 
   create() {
@@ -69,13 +69,13 @@ class Main extends Phaser.Scene {
     spawnCoins(8)
 
     let score = 0
-    let scoreText = this.add.text(700, 16, 'Score: 0', {
+    let scoreText = this.add.text(600, 16, 'Score: 0', {
       color: 'red',
       fontSize: '64px',
       fontFamily: 'cursive',
     })
     
-    const collectCoin = (pl, coin) => {
+    const collectCoin = (pl, coin, moreCoinsPoints) => {
       moreCoinPoints++
       pickup.play()
       if (moreCoinsPoints >= 3) {

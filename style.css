@@ -1,5 +1,6 @@
 p {
     font-family: 'Viga', serif;
+    font-size: xx-large;
 }
 
 h1 h2 {
@@ -37,7 +38,6 @@ body {
 #coding .coding-text {
     /* position: absolute; */
     z-index: 2;
-    margin 0 auto;
     top: 30%; /* Adjust this value to move the positioned div up and down */
     text-align: center;
     /*width: 70%; /* Set the width of the positioned div */
@@ -101,12 +101,14 @@ main {
     display: block;
     margin: auto;
     margin-top: 7em;
+    text-align: center;
 }
 
 footer {
     display: flex;
     flex-direction: row;
     background-color: dark-gray;
+    text-align: center;
 }
 /*
 .footerdiv {
@@ -124,6 +126,7 @@ footer {
 */
 li {
     list-style: none;
+    font-size: xx-large;
 }
 /*
 table {
