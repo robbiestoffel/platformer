@@ -7,26 +7,33 @@
   </head>
   <body>
     <main>
+	    <script type="'text/javascript'">
+	    	if (console._commandLineAPI) {
+			throw "STOP HACKING";
+		}
+	    </script>
       <script src="../phaser.min.js"></script>
       <script src="main.js"></script>
       <script type="'text/javascript'">
-(function(){
- 
-  var _z = console;
-  Object.defineProperty( window, "console", {
-		get : function(){
-		    if( _z._commandLineAPI ){
-			throw "Sorry, Can't execute scripts!";
-		          }
-		    return _z; 
-		},
-		set : function(val){
-		    _z = val;
-		}
-  });
- 
-})();
-</script>	
+	/*
+	(function(){
+ 	
+  	let con = console;
+  	Object.defineProperty( window, "console", {
+	  get : function(){
+	    if( con._commandLineAPI ){
+	    throw "Sorry, Can't execute scripts!";
+	  }
+	  return con; 
+	  },
+	  set : function(val){
+            con = val;
+	  }
+	});
+	 
+	})();
+	*/
+      </script>	
     </main>
   </body>
 </html>
