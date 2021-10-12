@@ -64,13 +64,24 @@ class Main extends Phaser.Scene {
 
         let coins = this.physics.add.staticGroup()
         const spawnCoins = (b) => {
-            let a = 0;
+            let a = 0
             while (a < b) {
                 coins.create(rX(), rY(), 'coin')
                 a++;
             }
         }
         spawnCoins(8)
+        
+        let powerUps = this.physics.add.staticGroup()
+        const spawnPowerUps = (b) => {
+            let a = 0
+            while (a < b) {
+                if (1 = randint(10)) {
+                    powerUps.create(rX(), rY(), 'powerup')
+                }
+            }
+        }
+                
 
         let scoreText = this.add.text(600, 16, `Score: ${moreBadGuys}`, {
             color: 'red',
@@ -89,6 +100,7 @@ class Main extends Phaser.Scene {
             scoreText.setText(`Score: ${moreBadGuys}`)
             coin.destroy()
             spawnCoins(1)
+            spawnPowerUps(1)
         }
 
         const hitBad = (pl, bad) => {
