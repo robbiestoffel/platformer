@@ -3,6 +3,7 @@ const keys = 'LEFT,RIGHT,SPACE,UP,W,A,S,D,R'
 let pl, k, go, jump, music, enemySpawnTimer, portal
 let moreCoinPoints = 0;
 let moreBadGuys = 0;
+let killBadGuys = false;
 
 const randint = lim => Math.floor(Math.random() * lim)
 const rX = () => randint(1024)
@@ -16,6 +17,7 @@ class Main extends Phaser.Scene {
         this.load.image('bad', '../game/assets/img/bad-guy.png')
         this.load.image('pf', './assets/img/DCplatform.png')
         this.load.image('go', './assets/img/DCgameover.png')
+        this.load.image('powerup', '../game/assets/img/coin.png')
         this.load.spritesheet('pl', './assets/img/DCGoodGuy.png', { frameWidth: 17, frameHeight: 30 })
         this.load.spritesheet('por', './assets/img/DCportal.png', { frameWidth: 35, frameHeight: 1 })
         this.load.audio('pickup', '../game/assets/snd/coinsound.wav')
@@ -104,12 +106,16 @@ class Main extends Phaser.Scene {
         }
 
         const hitBad = (pl, bad) => {
-            music.stop()
-            gos.play()
-            this.add.image(0, 0, 'go').setOrigin(0, 0)
-            go = true
-            this.physics.pause()
-            clearInterval(enemySpawnTimer)
+            if (killBadGuys = false) {
+              music.stop()
+              gos.play()
+              this.add.image(0, 0, 'go').setOrigin(0, 0)
+              go = true
+              this.physics.pause()
+              clearInterval(enemySpawnTimer)
+            } else if (killBadGuys = true) {
+              bad.destroy()
+            }
         }
 
         const newLevel = (p, portal) => {
@@ -118,6 +124,12 @@ class Main extends Phaser.Scene {
             clearInterval(enemySpawnTimer)
             music.stop()
             this.scene.restart()
+        }
+        
+        const collectPowerUps = (pl, powerUps) => {
+            killBadGuys = true
+            pl.setTint('#00000a')
+            setTimeout(() => {  killBadGuys = false; pl.setTint('#000000'); }, 5000)
         }
 
         const setMoreCoinPoints = (pl, plats, moreCoinPoints) => {
@@ -129,6 +141,7 @@ class Main extends Phaser.Scene {
         this.physics.add.collider(bad, plats)
         this.physics.add.collider(pl, bad, hitBad)
         this.physics.add.overlap(pl, portal, newLevel)
+        this.physics.add.overlap(pl, powerUps, collectPowerUps)
 
         this.cameras.main.setBounds(0, 0, 1024, 767)
         this.cameras.main.setZoom()
