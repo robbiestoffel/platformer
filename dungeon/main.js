@@ -78,7 +78,7 @@ class Main extends Phaser.Scene {
         const spawnPowerUps = (b) => {
             let a = 0
             while (a < b) {
-                if (1 = randint(10)) {
+                if (1 == randint(10)) {
                     powerUps.create(rX(), rY(), 'powerup')
                 }
             }
