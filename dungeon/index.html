@@ -8,9 +8,22 @@
   <body>
     <main>
 	    <script type="'text/javascript'">
-	    	if (console._commandLineAPI) {
-			throw "STOP HACKING";
-		}
+	    	(function() {
+    try {
+        var $_console$$ = console;
+        Object.defineProperty(window, "console", {
+            get: function() {
+                if ($_console$$._commandLineAPI)
+                    throw "STOP HACKING";
+                return $_console$$
+            },
+            set: function($val$$) {
+                $_console$$ = $val$$
+            }
+        })
+    } catch ($ignore$$) {
+    }
+})();
 	    </script>
       <script src="../phaser.min.js"></script>
       <script src="main.js"></script>
