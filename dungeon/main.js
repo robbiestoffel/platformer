@@ -17,7 +17,7 @@ class Main extends Phaser.Scene {
         this.load.image('bad', '../game/assets/img/bad-guy.png')
         this.load.image('pf', './assets/img/DCplatform.png')
         this.load.image('go', './assets/img/DCgameover.png')
-        this.load.image('powerup', '../game/assets/img/coin.png')
+        this.load.image('powerup', '../game/assets/img/powerup.png')
         this.load.spritesheet('pl', './assets/img/DCGoodGuy.png', { frameWidth: 17, frameHeight: 30 })
         this.load.spritesheet('por', './assets/img/DCportal.png', { frameWidth: 35, frameHeight: 1 })
         this.load.audio('pickup', '../game/assets/snd/coinsound.wav')
@@ -102,7 +102,7 @@ class Main extends Phaser.Scene {
             scoreText.setText(`Score: ${moreBadGuys}`)
             coin.destroy()
             spawnCoins(1)
-            spawnPowerUps(1)
+            // spawnPowerUps(1)
         }
 
         const hitBad = (pl, bad) => {
