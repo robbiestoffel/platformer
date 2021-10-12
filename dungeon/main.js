@@ -2,7 +2,7 @@ const keys = 'LEFT,RIGHT,SPACE,UP,W,A,S,D,R'
 
 let pl, k, go, jump, music, enemySpawnTimer, portal
 let moreCoinPoints = 0;
-let score = 0;
+let moreBadGuys = 0;
 
 const randint = lim => Math.floor(Math.random() * lim)
 const rX = () => randint(1024)
@@ -72,7 +72,7 @@ class Main extends Phaser.Scene {
         }
         spawnCoins(8)
 
-        let scoreText = this.add.text(600, 16, `Score: ${score}`, {
+        let scoreText = this.add.text(600, 16, `Score: ${moreBadGuys}`, {
             color: 'red',
             fontSize: '63px',
             fontFamily: 'cursive',
@@ -82,11 +82,11 @@ class Main extends Phaser.Scene {
             moreCoinPoints++
             pickup.play()
             if (moreCoinsPoints >= 3) {
-                score += 2
+                moreBadGuys += 2
             } else {
-                score += 1
+                moreBadGuys += 1
             }
-            scoreText.setText(`Score: ${score}`)
+            scoreText.setText(`Score: ${moreBadGuys}`)
             coin.destroy()
             spawnCoins(1)
         }
@@ -101,6 +101,7 @@ class Main extends Phaser.Scene {
         }
 
         const newLevel = (p, portal) => {
+            moreBadGuys--
             this.physics.pause()
             clearInterval(enemySpawnTimer)
             music.stop()
@@ -139,7 +140,7 @@ class Main extends Phaser.Scene {
         }
         if (k.R.isDown) {
             music.stop()
-            score = 0
+            moreBadGuys = 0
             this.scene.restart()
         }
 
