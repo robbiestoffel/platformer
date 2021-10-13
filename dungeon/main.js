@@ -12,19 +12,22 @@ const rY = () => randint(768)
 class Main extends Phaser.Scene {
 
     preload() {
+
         this.load.image('bg', './assets/img/DCbackg.png')
         this.load.image('coin', '../game/assets/img/coin.png')
         this.load.image('bad', '../game/assets/img/bad-guy.png')
         this.load.image('pf', './assets/img/DCplatform.png')
         this.load.image('go', './assets/img/DCgameover.png')
-        this.load.image('powerup', '../game/assets/img/powerup.png')
+        this.load.image('powerup', './assets/img/DCpowerup.png')
+        this.load.image('border', './assets/img/DCborder.png')
         this.load.spritesheet('pl', './assets/img/DCGoodGuy.png', { frameWidth: 17, frameHeight: 30 })
         this.load.spritesheet('por', './assets/img/DCportal.png', { frameWidth: 35, frameHeight: 1 })
         this.load.audio('pickup', '../game/assets/snd/coinsound.wav')
-        this.load.audio('music', '../game/assets/snd/backsound.wav')
+        // this.load.audio('music', '../game/assets/snd/backsound.wav')
         this.load.audio('gos', '../game/assets/snd/game-over.wav')
         this.load.audio('jump', '../game/assets/snd/jump.wav')
         this.load.audio('hit', '../game/assets/snd/collide.wav')
+        this.load.audio('sheild', './assets/snd/DCsheild.mp3')
 
     }
 
@@ -32,12 +35,13 @@ class Main extends Phaser.Scene {
         
         k = this.input.keyboard.addKeys(keys)
 
-        music = this.sound.add('music', { loop: true, volume: .2, })
+        // music = this.sound.add('music', { loop: true, volume: .2, })
         let pickup = this.sound.add('pickup')
         let gos = this.sound.add('gos')
         jump = this.sound.add('jump')
         let hit = this.sound.add('hit')
-        music.play()
+        let pusnd = this.sound.add('sheild')
+        // music.play()
 
         this.add.image(0, 0, 'bg').setOrigin(0, 0)
         pl = this.physics.add.sprite(100, 100, 'pl')
@@ -81,6 +85,7 @@ class Main extends Phaser.Scene {
                 if (1 == randint(10)) {
                     powerUps.create(rX(), rY(), 'powerup')
                 }
+            a++
             }
         }
                 
@@ -102,18 +107,18 @@ class Main extends Phaser.Scene {
             scoreText.setText(`Score: ${moreBadGuys}`)
             coin.destroy()
             spawnCoins(1)
-            // spawnPowerUps(1)
+            spawnPowerUps(1)
         }
 
         const hitBad = (pl, bad) => {
-            if (killBadGuys = false) {
-              music.stop()
+            if (killBadGuys == false) {
+              // music.stop()
               gos.play()
               this.add.image(0, 0, 'go').setOrigin(0, 0)
               go = true
               this.physics.pause()
               clearInterval(enemySpawnTimer)
-            } else if (killBadGuys = true) {
+            } else if (killBadGuys == true) {
               bad.destroy()
             }
         }
@@ -122,14 +127,16 @@ class Main extends Phaser.Scene {
             moreBadGuys--
             this.physics.pause()
             clearInterval(enemySpawnTimer)
-            music.stop()
+            // music.stop()
             this.scene.restart()
         }
         
         const collectPowerUps = (pl, powerUps) => {
+            pusnd.play()
+            const indicator = this.add.image(0, 0, 'border').setOrigin(0, 0)
+            powerUps.destroy()
             killBadGuys = true
-            pl.setTint('#00000a')
-            setTimeout(() => {  killBadGuys = false; pl.setTint('#000000'); }, 5000)
+            setTimeout(() => {  killBadGuys = false; indicator.destroy(); }, 5000)
         }
 
         const setMoreCoinPoints = (pl, plats, moreCoinPoints) => {
@@ -164,8 +171,9 @@ class Main extends Phaser.Scene {
             }
         }
         if (k.R.isDown) {
-            music.stop()
+            // music.stop()
             moreBadGuys = 0
+            killBadGuys = false
             this.scene.restart()
         }
 
