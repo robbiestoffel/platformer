@@ -2,8 +2,9 @@ const keys = 'LEFT,RIGHT,SPACE,UP,W,A,S,D,R'
 
 let pl, k, go, jump, music, enemySpawnTimer, portal
 let moreCoinPoints = 0;
-let moreBadGuys = 0;
-let killBadGuys = false;
+let score = 0;
+let poweredUp = false;
+let queuedPower = 0;
 
 const randint = lim => Math.floor(Math.random() * lim)
 const rX = () => randint(1024)
@@ -32,7 +33,7 @@ class Main extends Phaser.Scene {
     }
 
     create() {
-        
+
         k = this.input.keyboard.addKeys(keys)
 
         // music = this.sound.add('music', { loop: true, volume: .2, })
@@ -73,11 +74,11 @@ class Main extends Phaser.Scene {
             let a = 0
             while (a < b) {
                 coins.create(rX(), rY(), 'coin')
-                a++;
+                a++
             }
         }
         spawnCoins(8)
-        
+
         let powerUps = this.physics.add.staticGroup()
         const spawnPowerUps = (b) => {
             let a = 0
@@ -85,12 +86,11 @@ class Main extends Phaser.Scene {
                 if (1 == randint(10)) {
                     powerUps.create(rX(), rY(), 'powerup')
                 }
-            a++
+                a++
             }
         }
-                
 
-        let scoreText = this.add.text(600, 16, `Score: ${moreBadGuys}`, {
+        let scoreText = this.add.text(600, 16, `Score: ${score}`, {
             color: 'red',
             fontSize: '63px',
             fontFamily: 'cursive',
@@ -100,43 +100,56 @@ class Main extends Phaser.Scene {
             moreCoinPoints++
             pickup.play()
             if (moreCoinsPoints >= 3) {
-                moreBadGuys += 2
+                score += 2
             } else {
-                moreBadGuys += 1
+                score += 1
             }
-            scoreText.setText(`Score: ${moreBadGuys}`)
+            scoreText.setText(`Score: ${score}`)
             coin.destroy()
             spawnCoins(1)
             spawnPowerUps(1)
         }
 
         const hitBad = (pl, bad) => {
-            if (killBadGuys == false) {
-              // music.stop()
-              gos.play()
-              this.add.image(0, 0, 'go').setOrigin(0, 0)
-              go = true
-              this.physics.pause()
-              clearInterval(enemySpawnTimer)
-            } else if (killBadGuys == true) {
-              bad.destroy()
+            if (poweredUp == false) {
+                // music.stop()
+                gos.play()
+                this.add.image(0, 0, 'go').setOrigin(0, 0)
+                go = true
+                this.physics.pause()
+                clearInterval(enemySpawnTimer)
+            } else if (poweredUp == true) {
+                bad.destroy()
             }
         }
 
         const newLevel = (p, portal) => {
-            moreBadGuys--
+            score--
+            poweredUp = false
             this.physics.pause()
             clearInterval(enemySpawnTimer)
             // music.stop()
             this.scene.restart()
         }
-        
+
         const collectPowerUps = (pl, powerUps) => {
-            pusnd.play()
-            const indicator = this.add.image(0, 0, 'border').setOrigin(0, 0)
             powerUps.destroy()
-            killBadGuys = true
-            setTimeout(() => {  killBadGuys = false; indicator.destroy(); }, 5000)
+            if (poweredUp == false) {
+                poweredUp = true
+                pusnd.play()
+                const indicator = this.add.image(0, 0, 'border').setOrigin(0, 0)
+
+                setTimeout(() => {
+                    poweredUp = false;
+                    indicator.destroy();
+                    if (queuedPower > 0) {
+                        queuedPower--
+                        collectPowerUps(pl, powerUps)
+                    }
+                }, 5000)
+            } else if (poweredUp == true) {
+                queuedPower++
+            }
         }
 
         const setMoreCoinPoints = (pl, plats, moreCoinPoints) => {
@@ -172,8 +185,8 @@ class Main extends Phaser.Scene {
         }
         if (k.R.isDown) {
             // music.stop()
-            moreBadGuys = 0
-            killBadGuys = false
+            score = 0
+            poweredUp = false
             this.scene.restart()
         }
 
