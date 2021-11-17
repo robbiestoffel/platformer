@@ -17,7 +17,7 @@ class Main extends Phaser.Scene {
         this.load.image('coin', '../game/assets/img/coin.png')
         this.load.image('bad', '../game/assets/img/bad-guy.png')
         this.load.image('pf', '../game/assets/img/platform.png')
-        this.load.image('go', '../game/assets/img/game-over.png')
+        this.load.image('go', '../dungeon/assets/img/DCgameover.png')
         this.load.image('powerup', '../dungeon/assets/img/DCpowerup.png')
         this.load.image('border', '../dungeon/assets/img/DCborder.png')
         this.load.spritesheet('pl', '../game/assets/img/good-guy.png', { frameWidth: 17, frameHeight: 30 })
@@ -48,11 +48,22 @@ class Main extends Phaser.Scene {
 
         let bad = this.physics.add.group()
         const spawnEnemy = () => {
-            let b = bad.create(rX(), rY(), 'bad')
-            b.setCollideWorldBounds(true)
-            b.setScale(2)
-            b.setBounce(1)
-            b.setVelocity(200)
+            let badX = rX();
+            let badY = rY();
+            let plX1 = pl.centerX-100
+            let plX2 = pl.centerX+100
+            let plY1 = pl.centerY-100
+            let plY2 = pl.centerY+100
+
+            if ((badX > plX1 && badX < plX2) && (badY > plY1 && badY < plY2)) {
+                spawnEnemy()
+            } else {
+                let b = bad.create(badX, badY, 'bad')
+                b.setCollideWorldBounds(true)
+                b.setScale(2)
+                b.setBounce(1)
+                b.setVelocity(200)
+            }
         }
         spawnEnemy()
         enemySpawnTimer = setInterval(spawnEnemy, 10000)
@@ -137,7 +148,7 @@ class Main extends Phaser.Scene {
                 queuedPower++
             }
         }
-        
+
 
         const setMoreCoinPoints = (pl, plats, moreCoinPoints) => {
             moreCoinPoints = 0;
