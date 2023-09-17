@@ -1,3 +1,3 @@
 # Platformer Game
 
-coolio
+Play the game at: (thefungame.netlify.app)
