@@ -8,4 +8,6 @@
 
 * [This is the main page for the game](https://thefungame.netlify.app)
 * [Link directly to the alpha version](https://thefungame.netlify.app/alpha/)
-* [Link directly to the DC version](htttps://thefungame.netlify.app/dungeon/)
+* [Link directly to the DC version](https://thefungame.netlify.app/dungeon/)
+
+Enjoy
